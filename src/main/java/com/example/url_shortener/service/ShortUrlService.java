@@ -33,8 +33,6 @@ public class ShortUrlService {
         repository.save(url);
     }
 
-    // TODO: Ensure generated code is unique
-
     private String generateCode() {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder sb = new StringBuilder();
