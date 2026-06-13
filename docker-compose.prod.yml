@@ -1,0 +1,24 @@
+services:
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: urlshortener
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - prod_pgdata:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    image: your-dockerhub-user/url-backend:latest
+    env_file:
+      - .env.prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  prod_pgdata:
