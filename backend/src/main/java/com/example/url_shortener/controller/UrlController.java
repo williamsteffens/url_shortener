@@ -24,10 +24,10 @@ public class UrlController {
 
     @PostMapping("/shorten")
     public ResponseEntity<ShortUrlResponse> shorten(@RequestBody CreateShortUrlRequest request) {
-        ShortUrl saved = service.create(request.getUrl());
+        ShortUrl shortUrl = service.create(request.getUrl());
 
         return ResponseEntity.ok(
-                ShortUrlMapper.toDto(saved, baseUrl)
+                ShortUrlMapper.toDto(shortUrl, baseUrl)
         );
     }
 
