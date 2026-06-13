@@ -8,7 +8,7 @@ public class ShortUrlMapper {
     public static ShortUrlResponse toDto(ShortUrl entity, String baseUrl) {
         return new ShortUrlResponse(
                 entity.getOriginalUrl(),
-                baseUrl + "/" + entity.getShortCode(),
+                baseUrl + "/api/" + entity.getShortCode(),
                 entity.getClicks()
         );
     }
