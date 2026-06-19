@@ -4,6 +4,7 @@ import com.example.url_shortener.entity.ShortUrl;
 import com.example.url_shortener.repository.ShortUrlRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -26,6 +27,10 @@ public class ShortUrlService {
 
     public Optional<ShortUrl> getByCode(String code) {
         return repository.findByShortCode(code);
+    }
+
+    public List<ShortUrl> getAllUrls() {
+        return repository.findAll();
     }
 
     public void incrementClicks(ShortUrl url) {

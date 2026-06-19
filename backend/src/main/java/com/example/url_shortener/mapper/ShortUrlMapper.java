@@ -5,11 +5,13 @@ import com.example.url_shortener.entity.ShortUrl;
 
 public class ShortUrlMapper {
 
-    public static ShortUrlResponse toDto(ShortUrl entity, String baseUrl) {
+    public static ShortUrlResponse toDto(ShortUrl entity, String combinedUrl) {
         return new ShortUrlResponse(
+                entity.getId(),
                 entity.getOriginalUrl(),
-                baseUrl + "/api/" + entity.getShortCode(),
-                entity.getClicks()
+                entity.getShortCode(),
+                entity.getClicks(),
+                combinedUrl
         );
     }
 }

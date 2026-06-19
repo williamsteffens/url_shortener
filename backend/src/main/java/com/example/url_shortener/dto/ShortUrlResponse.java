@@ -6,7 +6,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class ShortUrlResponse {
+    private Long id;
     private String originalUrl;
     private String shortUrl;
     private Long clicks;
+    private String combinedUrl;
 }
