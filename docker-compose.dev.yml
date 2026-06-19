@@ -13,7 +13,9 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.dev
     container_name: url-backend
     ports:
       - "8080:8080"
@@ -21,6 +23,22 @@ services:
       - .env.dev
     depends_on:
       - db
+    volumes:
+      - ./backend:/app
+      - ~/.m2:/root/.m2
+    
+  frontend:
+    build: ./frontend
+    container_name: url-frontend
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env.dev
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 volumes:
   pgdata:
