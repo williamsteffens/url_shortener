@@ -45,6 +45,9 @@ public class UrlController {
 
     @GetMapping("/all")
     public ResponseEntity<Iterable<ShortUrlResponse>> getAllUrls() {
-        return ResponseEntity.ok(service.getAllUrls().stream().map(url -> ShortUrlMapper.toDto(url, baseUrl + "/api/" + url.getShortCode())).toList());
+        return ResponseEntity.ok(service.getAllUrls()
+            .stream()
+            .map(url -> ShortUrlMapper.toDto(url, baseUrl + "/api/" + url.getShortCode()))
+            .toList());
     }
 }
