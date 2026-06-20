@@ -37,6 +37,4 @@ public class RedirectController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    // TODO: Add a catch-all route to handle all other paths and redirect to the frontend
 }
