@@ -31,18 +31,6 @@ public class UrlController {
         );
     }
 
-    @GetMapping("/{code}")
-    public ResponseEntity<Void> redirect(@PathVariable String code) {
-        return service.getByCode(code)
-                .map(url -> {
-                    service.incrementClicks(url);
-                    return ResponseEntity.status(302)
-                            .header("Location", url.getOriginalUrl())
-                            .<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @GetMapping("/all")
     public ResponseEntity<Iterable<ShortUrlResponse>> getAllUrls() {
         return ResponseEntity.ok(service.getAllUrls()

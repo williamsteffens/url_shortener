@@ -1,6 +1,8 @@
 package com.example.url_shortener.controller;
 
+import com.example.url_shortener.service.ShortUrlService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,12 @@ public class RedirectController {
     @Value("${app.frontend-url}")
     private String frontendUrl;
 
+    private final ShortUrlService service;
+
+    public RedirectController(ShortUrlService service) {
+        this.service = service;
+    }
+
     @GetMapping("/")
     public ResponseEntity<Void> home() {
         return ResponseEntity.status(302)
@@ -18,7 +26,17 @@ public class RedirectController {
                 .build();
     }
 
+    @GetMapping("/{code}")
+    public ResponseEntity<Void> redirect(@PathVariable String code) {
+        return service.getByCode(code)
+                .map(url -> {
+                    service.incrementClicks(url);
+                    return ResponseEntity.status(302)
+                            .header("Location", url.getOriginalUrl())
+                            .<Void>build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // TODO: Add a catch-all route to handle all other paths and redirect to the frontend
-    
-    // TODO: move /{code} to this controller and handle the redirection logic here
 }
