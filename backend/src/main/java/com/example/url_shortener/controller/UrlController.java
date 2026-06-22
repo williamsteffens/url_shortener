@@ -27,7 +27,7 @@ public class UrlController {
         ShortUrl shortUrl = service.create(request.getUrl());
 
         return ResponseEntity.ok(
-            ShortUrlMapper.toDto(shortUrl, baseUrl + "/api/" + shortUrl.getShortCode())
+            ShortUrlMapper.toDto(shortUrl)
         );
     }
 
@@ -35,7 +35,7 @@ public class UrlController {
     public ResponseEntity<Iterable<ShortUrlResponse>> getAllUrls() {
         return ResponseEntity.ok(service.getAllUrls()
             .stream()
-            .map(url -> ShortUrlMapper.toDto(url, baseUrl + "/api/" + url.getShortCode()))
+            .map(ShortUrlMapper::toDto)
             .toList());
     }
 }
