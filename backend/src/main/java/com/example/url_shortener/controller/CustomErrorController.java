@@ -1,34 +1,37 @@
-package com.example.url_shortener.controller;
+// using the default Spring Boot error handling mechanism to serve custom error pages for 404 and other errors.
+// this can be used for handling errors if analytics tracking is needed for 404 errors and similar scenarios.
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Value;
 
-@Controller
-public class CustomErrorController {
 
-    @Value("${app.frontend-url}")
-    private String frontendUrl;
+// package com.example.url_shortener.controller;
 
-    @RequestMapping("/error")
-    public ResponseEntity<Void> handleError(HttpServletRequest request) {
+// import jakarta.servlet.RequestDispatcher;
+// import jakarta.servlet.http.HttpServletRequest;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.boot.web.servlet.error.ErrorController;
 
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+// @Controller
+// public class CustomErrorController implements ErrorController {
 
-        if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
+//     @Value("${app.frontend-url}")
+//     private String frontendUrl;
 
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return ResponseEntity.status(302)
-                        .header("Location", frontendUrl + "/404")
-                        .build();
-            }
-        }
+//     @RequestMapping("/error")
+//     public String handleError(HttpServletRequest request) {
 
-        return ResponseEntity.status(500).build();
-    }
-}
+//         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+
+//         if (status != null) {
+//             int statusCode = Integer.parseInt(status.toString());
+
+//             if (statusCode == HttpStatus.NOT_FOUND.value()) {
+//                 return "error/404";
+//             }
+//         }
+
+//         return "error/error";
+//     }
+// }

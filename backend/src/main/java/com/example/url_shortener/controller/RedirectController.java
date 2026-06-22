@@ -1,5 +1,7 @@
 package com.example.url_shortener.controller;
 
+import com.example.url_shortener.entity.ShortUrl;
+import com.example.url_shortener.exceptions.UrlNotFoundException;
 import com.example.url_shortener.service.ShortUrlService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,13 +30,13 @@ public class RedirectController {
 
     @GetMapping("/{code}")
     public ResponseEntity<Void> redirect(@PathVariable String code) {
-        return service.getByCode(code)
-                .map(url -> {
-                    service.incrementClicks(url);
-                    return ResponseEntity.status(302)
-                            .header("Location", url.getOriginalUrl())
-                            .<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+        ShortUrl url = service.getByCode(code)
+            .orElseThrow(UrlNotFoundException::new);
+
+        service.incrementClicks(url);
+
+        return ResponseEntity.status(302)
+                .header("Location", url.getOriginalUrl())
+                .build();
     }
 }
